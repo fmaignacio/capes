@@ -30,98 +30,36 @@ st.set_page_config(
     layout="wide"
 )
 
-# # Cabeçalho estilizado
-# st.markdown('<h1 class="main-title">Busca Semântica - Teses e Dissertações</h1>', unsafe_allow_html=True)
-# # st.markdown('<h3 class="subtitle">Teses e dissertações de forma fácil e rápida</h3>', unsafe_allow_html=True)
-# st.markdown('<h4 class="subtitle">Base Capes (2013 a 2022)</h4>', unsafe_allow_html=True)
-
 # Carregar os dados logo no início
 @st.cache_resource
 def carregar_modelo():
     return SentenceTransformer('PORTULAN/serafim-100m-portuguese-pt-sentence-encoder')
 
 
-@st.cache_data
-def carregar_dados():
-    df = pd.read_csv('df_termos_30k_retom.csv', encoding='utf-8')
-    embeddings = np.load('embeddings_serafim-100m_30_retom.npy')
-    return df, embeddings
+# @st.cache_data
+# def carregar_dados():
+#     df = pd.read_csv('df_termos_30k_retom.csv', encoding='utf-8')
+#     embeddings = np.load('embeddings_serafim-100m_30_retom.npy')
+#     return df, embeddings
 
+FILES = {
+    "df_termos_30k_retom.pkl": "1CJ_ApY8wZ77lwE7ZnHwJCgJNsBHCEOIe",
+    "embembeddings_serafim-100m_30_retom.npy": "1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9"
+}
+
+st.write("Dados e embeddings carregados com sucesso!")
 
 # Carrega os dados globalmente
 try:
     modelo = carregar_modelo()
-    df, embeddings = carregar_dados()
+    df = dados["df_termos_30k_retom.pkl"]
+    embeddings = dados["embeddings_serafim-100m_30_retom.npy"]
 except Exception as e:
     st.error(f"Erro ao carregar dados: {str(e)}")
     st.stop()
+st.write("Dados e embeddings carregados com sucesso!")
 
-# def limpar_texto(texto):
-#     if isinstance(texto, pd.Series):
-#         if texto.isna().any() or texto.isnull().any():
-#             return ''
-#     elif pd.isna(texto) or texto is None:
-#         return ''
-#
-#     # Normalizar o texto para a forma NFD (decomposição canônica)
-#     texto = unicodedata.normalize('NFD', str(texto))
-#
-#     # Dicionário de substituições específicas para palavras incompletas
-#     substituicoes_especificas = {
-#         "PRE- PROCESSAMENTO": "PREPROCESSAMENTO",
-#         "VARIA- VEIS": "VARIAVEIS",
-#         "CONTI- NUAS": "CONTINUAS",
-#         "ELETRO- NICO": "ELETRONICO",
-#         "DILUI- DOS": "DILUIDOS",
-#         "POSSI- VEL": "POSSIVEL",
-#         "ME- TODOS": "METODOS",
-#         "NU- MERO": "NUMERO",
-#         "EFICA- CIA": "EFICACIA",
-#         "MAGNE- TICA": "MAGNETICA",
-#         "ANA- LISE": "ANALISE",
-#         "PU- BLICOS": "PUBLICOS",
-#         "ACADE- MICO": "ACADEMICO",
-#         "GEOME- TRICAS": "GEOMETRICAS",
-#         "GENE- TICA": "GENETICA"
-#     }
-#     # Aplicar as substituições específicas
-#     for original, substituto in substituicoes_especificas.items():
-#         texto = texto.replace(original, substituto)
-#
-#     # Dicionário de mapeamento para substituir vogais com "´" pelo acento correto
-#     substituicoes_vogais = {
-#         "A´": "Á", "a´": "á",
-#         "E´": "É", "e´": "é",
-#         "I´": "Í", "i´": "í",
-#         "O´": "Ó", "o´": "ó",
-#         "U´": "Ú", "u´": "ú"
-#     }
-#
-#     # Aplicar substituições de vogais com "´"
-#     for original, substituto in substituicoes_vogais.items():
-#         texto = texto.replace(original, substituto)
-#
-#     # Unir palavras separadas por "- " apenas entre letras
-#     texto = re.sub(r'(?<=\w)-\s(?=\w)', '', texto)
-#
-#     # Remover caracteres de combinação (diacríticos)
-#     texto = ''.join(c for c in texto if not unicodedata.combining(c))
-#
-#     # Converter para maiúsculas
-#     texto = texto.upper()
-#
-#     return texto
-#
-# #Campos de texto em caixa baixa
-# df['DS_RESUMO'] = df['DS_RESUMO'].apply(limpar_texto)
-# df['DS_PALAVRA_CHAVE'] = df['DS_PALAVRA_CHAVE'].apply(limpar_texto)
-# df['NM_UF_IES'] = df['NM_UF_IES'].apply(limpar_texto)
-# df['NM_ENTIDADE_ENSINO'] = df['NM_ENTIDADE_ENSINO'].apply(limpar_texto)
-# df['NM_PROGRAMA'] = df['NM_PROGRAMA'].apply(limpar_texto)
-# df['NM_PRODUCAO'] = df['NM_PRODUCAO'].apply(limpar_texto)
-# df['NM_AREA_CONCENTRACAO'] = df['NM_AREA_CONCENTRACAO'].apply(limpar_texto)
-# df['TERMOS_PRESENTES'] = df['TERMOS_PRESENTES'].apply(limpar_texto)
-# df['TERMOS_STR'] = df['TERMOS_STR'].apply(limpar_texto)
+
 
 
 
