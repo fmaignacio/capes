@@ -46,7 +46,6 @@ FILES = {
     "df_termos_30k_retom.pkl": "1CJ_ApY8wZ77lwE7ZnHwJCgJNsBHCEOIe",
     "embeddings_serafim-100m_30_retom.npy": "1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9"
 }
-1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9
 @st.cache_resource
 def carregar_dados():
     os.makedirs("data", exist_ok=True)
