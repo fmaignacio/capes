@@ -13,15 +13,15 @@ from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.text_rank import TextRankSummarizer
 import nltk
-nltk.download('punkt')
 from sklearn.feature_extraction.text import TfidfVectorizer
 import yake
-# from gensim.summarization import keywords
 import spacy
-from sklearn.feature_extraction.text import TfidfVectorizer
 import networkx as nx
 import matplotlib.pyplot as plt
+import os  
+import gdown  
 
+nltk.download('punkt')
 
 # Configuração inicial da página
 st.set_page_config(
