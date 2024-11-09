@@ -47,6 +47,33 @@ FILES = {
     "embembeddings_serafim-100m_30_retom.npy": "1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9"
 }
 
+@st.cache_resource
+def carregar_dados():
+    os.makedirs("data", exist_ok=True)
+    dados = {}
+
+    for filename, file_id in FILES.items():
+        local_path = f"data/{filename}"
+
+        # Verifica se o arquivo já existe
+        if not os.path.exists(local_path):
+            url = f"https://drive.google.com/uc?id={file_id}"
+            gdown.download(url, local_path, quiet=False)
+
+        # Carrega o arquivo baseado na extensão
+        if filename.endswith('.pkl'):
+            dados[filename] = pd.read_pickle(local_path)
+        elif filename.endswith('.npy'):
+            dados[filename] = np.load(local_path)
+
+    return dados
+
+
+# Uso dos dados no app
+dados = carregar_dados()
+df_termos = dados["df_termos_30k_retom.pkl"]
+embeddings = dados["embembeddings_serafim-100m_30_retom.npy"]
+
 st.write("Dados e embeddings carregados com sucesso!")
 
 # Carrega os dados globalmente
