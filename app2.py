@@ -44,9 +44,9 @@ def carregar_modelo():
 
 FILES = {
     "df_termos_30k_retom.pkl": "1CJ_ApY8wZ77lwE7ZnHwJCgJNsBHCEOIe",
-    "embembeddings_serafim-100m_30_retom.npy": "1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9"
+    "embeddings_serafim-100m_30_retom.npy": "1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9"
 }
-
+1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9
 @st.cache_resource
 def carregar_dados():
     os.makedirs("data", exist_ok=True)
@@ -72,7 +72,7 @@ def carregar_dados():
 # Uso dos dados no app
 dados = carregar_dados()
 df_termos = dados["df_termos_30k_retom.pkl"]
-embeddings = dados["embembeddings_serafim-100m_30_retom.npy"]
+embeddings = dados["embeddings_serafim-100m_30_retom.npy"]
 
 st.write("Dados e embeddings carregados com sucesso!")
 
