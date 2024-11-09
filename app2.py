@@ -30,22 +30,17 @@ st.set_page_config(
     layout="wide"
 )
 
-# Carregar os dados logo no início
-@st.cache_resource
-def carregar_modelo():
-    return SentenceTransformer('PORTULAN/serafim-100m-portuguese-pt-sentence-encoder')
-
-
-# @st.cache_data
-# def carregar_dados():
-#     df = pd.read_csv('df_termos_30k_retom.csv', encoding='utf-8')
-#     embeddings = np.load('embeddings_serafim-100m_30_retom.npy')
-#     return df, embeddings
-
+# Definição dos arquivos
 FILES = {
     "df_termos_30k_retom.pkl": "1CJ_ApY8wZ77lwE7ZnHwJCgJNsBHCEOIe",
     "embeddings_serafim-100m_30_retom.npy": "1qI2WqqIRC0S_YiV9sCJkvYh8EKlGtig9"
 }
+
+# Carregar modelo e dados
+@st.cache_resource
+def carregar_modelo():
+    return SentenceTransformer('PORTULAN/serafim-100m-portuguese-pt-sentence-encoder')
+
 @st.cache_resource
 def carregar_dados():
     os.makedirs("data", exist_ok=True)
@@ -67,28 +62,16 @@ def carregar_dados():
 
     return dados
 
-
-# Uso dos dados no app
-dados = carregar_dados()
-df_termos = dados["df_termos_30k_retom.pkl"]
-embeddings = dados["embeddings_serafim-100m_30_retom.npy"]
-
-st.write("Dados e embeddings carregados com sucesso!")
-
-# Carrega os dados globalmente
+# Carregar dados globalmente
 try:
     modelo = carregar_modelo()
+    dados = carregar_dados()
     df = dados["df_termos_30k_retom.pkl"]
     embeddings = dados["embeddings_serafim-100m_30_retom.npy"]
+    st.write("Dados e embeddings carregados com sucesso!")
 except Exception as e:
     st.error(f"Erro ao carregar dados: {str(e)}")
     st.stop()
-st.write("Dados e embeddings carregados com sucesso!")
-
-
-
-
-
 
 def limpar_texto_robusto(texto):
     if pd.isna(texto):
