@@ -541,24 +541,39 @@ def main():
                     with col_resultados:
                         st.subheader("Resultados da Busca")
                         for idx, row in resultados.iterrows():
-                            with st.expander(f"{row['NM_PRODUCAO'][:300]}...", expanded=idx == 0):
+                            with st.expander(f"{row['NM_PRODUCAO'][:300]}.", expanded=idx == 0):
+                                # st.markdown(f"**Título:** {row['NM_PRODUCAO']}")
                                 col1, col2 = st.columns([2, 1])
+
+                                # Coluna 1
                                 with col1:
-                                    st.markdown(f"**Título:** {row['NM_PRODUCAO']}")
-                                    st.markdown(f"**Instituição:** {row['SG_ENTIDADE_ENSINO']} ({row['SG_UF_IES']})")
+                                    st.markdown(f"**Programa:** {row['NM_PROGRAMA']}")
+                                    st.markdown(f"**Área:** {row['NM_AREA_CONHECIMENTO']}")
                                     st.markdown(f"**Ano:** {row['AN_BASE']}")
                                     st.markdown(f"**Palavras-chave:** {row['DS_PALAVRA_CHAVE']}")
-                                    st.markdown("**Resumo:**")
-                                    st.markdown(row['DS_RESUMO_CAP'])
-
-                                with col2:
-                                    st.markdown("**Detalhes:**")
-                                    st.markdown(f"- **Programa:** {row['NM_PROGRAMA']}")
-                                    st.markdown(f"- **Área:** {row['NM_AREA_CONHECIMENTO']}")
-                                    st.markdown(f"- **Orientador:** {row['NM_ORIENTADOR']}")
-                                    st.markdown(f"- **Similaridade:** {row['similaridade']:.2%}")
                                     if pd.notna(row.get('URL')):
                                         st.markdown(f"[Link para texto completo]({row['URL']})")
+
+
+                                # Coluna 2
+                                with col2:
+                                    # st.markdown("**Detalhes:**")
+                                    st.markdown(f"**Instituição:** {row['SG_ENTIDADE_ENSINO']} ({row['SG_UF_IES']})")
+                                    # st.markdown(f"- **Programa:** {row['NM_PROGRAMA']}")
+                                    st.markdown(f"**Orientador:** {row['NM_ORIENTADOR']}")
+                                    st.markdown(f"**Discente:** {row['NM_DISCENTE']}")
+                                    st.markdown(f"**Similaridade:** {row['similaridade']:.2%}")
+
+
+
+                                #Resumo em largura total abaixo das colunas
+                                # st.markdown("---")  # Linha divisória
+                                st.markdown("**RESUMO:**")
+                                st.markdown(row['DS_RESUMO_CAP'])
+
+                                # st.markdown('<div style="margin: 0.1em 0;"><hr></div>', unsafe_allow_html=True)
+                                # st.markdown('<p style="font-weight: bold; margin-bottom: 0.1em;">RESUMO:</p>', unsafe_allow_html=True)
+                                # st.markdown(row['DS_RESUMO_CAP'])
 
                     # Coluna de insights
                     with col_insights:
